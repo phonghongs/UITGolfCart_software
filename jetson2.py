@@ -97,13 +97,13 @@ def main():
             s.send(lanelineData.encode('utf8'))
             seg = s.recv(MAX_DGRAM)
 
-            cv2.imshow("SEG", image_resized)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                done = True
+            # cv2.imshow("SEG", image_resized)
+            # if cv2.waitKey(1) & 0xFF == ord('q'):
+            #     done = True
 
     s.send("quit".encode('utf8'))
     time.sleep(1)
-    cv2.destroyAllWindows()
+    # cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":

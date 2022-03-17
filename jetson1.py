@@ -42,18 +42,18 @@ def main():
             y , x = net.predict(image_resized, warp = False)
             point, image_points_center = CenterCalv2(x, y, image_resized, CENTER_LINE)
 
-            cv2.imshow("image_points_center", image_points_center)
+            # cv2.imshow("image_points_center", image_points_center)
 
             lanelineData = f'TX2_1:{str(x)};{str(y)}'
             s.send(lanelineData.encode('utf8'))
             seg = s.recv(MAX_DGRAM)
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            done = True
+        # if cv2.waitKey(1) & 0xFF == ord('q'):
+        #     done = True
 
     s.send("quit:".encode('utf8'))
     time.sleep(1)
-    cv2.destroyAllWindows()
+    # cv2.destroyAllWindows()
 
 if __name__ == "__main__":
     main()

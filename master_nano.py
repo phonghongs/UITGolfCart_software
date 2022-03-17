@@ -1,16 +1,9 @@
 import asyncio, socket
-import re
-import datetime
 from tkinter.tix import Tree
 from Libs.laneprocess import CenterCalv2
-from Libs.utils import SimpleKalmanFilter, load_coefficients
-from albumentations.pytorch import ToTensorV2
+from Libs.utils import load_coefficients
 import cv2
-import threading
-import struct
-import math
 import numpy as np
-import albumentations as A
 import ast
 
 global raw_image, done
