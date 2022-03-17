@@ -52,10 +52,8 @@ def main():
             done = True
 
     s.send("quit:".encode('utf8'))
-
-    cv2.destroyAllWindows()
     time.sleep(1)
-    s.close()
+    cv2.destroyAllWindows()
 
 if __name__ == "__main__":
     main()

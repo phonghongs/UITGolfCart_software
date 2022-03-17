@@ -103,7 +103,6 @@ def main():
 
     s.send("quit".encode('utf8'))
     time.sleep(1)
-    s.close()
     cv2.destroyAllWindows()
 
 

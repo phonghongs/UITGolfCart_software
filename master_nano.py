@@ -24,8 +24,8 @@ MAX_IMAGE_DGRAM = MAX_DGRAM - 64 # extract 64 bytes in case UDP frame overflown
 
 mtx2, dist2 = load_coefficients('CalibCamera_96/calibration_chessboard_96deg.yml')
 
+
 def dataJetson1(dataPoint=''):
-    print(type(dataPoint))
     xStr, yStr = dataPoint.split(';')
     x = ast.literal_eval(xStr)
     y = ast.literal_eval(yStr)
@@ -34,6 +34,7 @@ def dataJetson1(dataPoint=''):
     point, image_points_center = CenterCalv2(x, y, blank_image, 225)
     cv2.imshow('RESULT', image_points_center)
     cv2.waitKey(1)
+
 
 def dataJetson2(dataSeg=''):
     contData = ast.literal_eval(dataSeg)
@@ -52,22 +53,23 @@ async def handle_client(client):
     request = None
     dat = b''
     done = False
+    try:
+        while request != 'quit':
+            request = (await loop.sock_recv(client, 2**16 - 64)).decode('utf8')
+            node, data = request.split(':')
+            if node == 'TX2_1':
+                dataJetson1(data)
+            elif node == 'TX2_2':
+                dataJetson2(data)
 
-    while request != 'quit':
-        request = (await loop.sock_recv(client, 2**16 - 64)).decode('utf8')
-        
-        node, data = request.split(':')
-        if node == 'TX2_1':
-            dataJetson1(data)
-        elif node == 'TX2_2':
-            dataJetson2(data)
-
-        await loop.sock_sendall(
-            client,
-            'ok'.encode('utf8')
-        )
-
+            await loop.sock_sendall(
+                client,
+                'ok'.encode('utf8')
+            )
+    except:
+        print("Shutdown nho'")
     client.close()
+    cv2.destroyAllWindows()
 
 
 async def run_server():
